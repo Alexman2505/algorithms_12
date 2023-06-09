@@ -21,9 +21,8 @@ class StackMaxEffective:
         return self.max_stack[-1]
 
 
-stack = StackMaxEffective()
-
 n = int(input())
+stack = StackMaxEffective()
 for _ in range(n):
     command = input().split()
     if command[0] == "push":

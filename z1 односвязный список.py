@@ -18,6 +18,7 @@ print_linked_list(n1)
 # first -> second -> third -> None
 
 
+# А теперь рассмотрим встраивание в середину списка
 def get_node_by_index(node, index):
     while index:
         node = node.next

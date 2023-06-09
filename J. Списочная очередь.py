@@ -13,7 +13,7 @@ class LinkedList:
     def is_empty(self):
         return self.size == 0
 
-    def insert(self, data):
+    def put_x(self, data):
         new_node = Node(data)
         if self.is_empty():
             self.head = new_node
@@ -23,7 +23,7 @@ class LinkedList:
             self.tail = new_node
         self.size += 1
 
-    def remove(self):
+    def get_head(self):
         if self.is_empty():
             return "error"
         data = self.head.data
@@ -33,7 +33,7 @@ class LinkedList:
             self.tail = None
         return data
 
-    def get_size(self):
+    def size_stek(self):
         return self.size
 
 
@@ -44,8 +44,8 @@ for _ in range(n):
     command = input().split()
 
     if command[0] == "put":
-        queue.insert(int(command[1]))
+        queue.put_x(int(command[1]))
     elif command[0] == "get":
-        print(queue.remove())
+        print(queue.get_head())
     elif command[0] == "size":
-        print(queue.get_size())
+        print(queue.size_stek())
