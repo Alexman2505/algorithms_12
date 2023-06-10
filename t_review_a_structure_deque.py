@@ -1,4 +1,5 @@
-# 88087303
+88088320
+
 from typing import Tuple
 
 
@@ -41,6 +42,7 @@ class Deque:
             print("error")
         else:
             value = self.buffer[self.head]
+            self.buffer[self.head] = None
             self.head = (self.head + 1) % self.size
             self.count -= 1
             print(value)
@@ -51,6 +53,7 @@ class Deque:
         else:
             self.tail = (self.tail - 1) % self.size
             value = self.buffer[self.tail]
+            self.buffer[self.tail] = None
             self.count -= 1
             print(value)
 
@@ -60,7 +63,8 @@ def read_input() -> Tuple[int, int]:
         n = int(input())
     except ValueError:
         raise InputError(
-            'Ошибка! Было введено не число. Введите число в диапазоне от 1 до 100000\n'
+            'Ошибка! Было введено не число. '
+            'Введите число в диапазоне от 1 до 100000\n'
         )
     if not 1 <= n <= 100000:
         raise InputError(
@@ -70,7 +74,8 @@ def read_input() -> Tuple[int, int]:
         m = int(input())
     except ValueError:
         raise InputError(
-            'Ошибка! Было введено не число. Введите число в диапазоне от 1 до 50000\n'
+            'Ошибка! Было введено не число. '
+            'Введите число в диапазоне от 1 до 50000\n'
         )
     if not 1 <= m <= 50000:
         raise InputError(
