@@ -1,6 +1,38 @@
-# 88087820
+# 88187285
+
+import operator
+
+OPERATIONS = {
+    '+': operator.add,
+    '-': operator.sub,
+    '*': operator.mul,
+    '/': operator.floordiv,
+}
+
+
 class InputError(Exception):
     pass
+
+
+class Stack:
+    def __init__(self):
+        self._stack = []
+
+    def push(self, item: int) -> None:
+        self._stack.append(item)
+
+    def pop(self) -> int:
+        if self.is_empty():
+            raise IndexError("Стек пуст.")
+        return self._stack.pop()
+
+    def is_empty(self) -> bool:
+        return len(self._stack) == 0
+
+    def top(self) -> int:
+        if self.is_empty():
+            raise IndexError("Стек пуст.")
+        return self._stack[-1]
 
 
 def validate_expression(expression: str) -> str:
@@ -23,32 +55,26 @@ def validate_expression(expression: str) -> str:
 
 
 def calculator(expression: str) -> None:
-    stack = []
+    stack = Stack()
 
     for operation in expression.split():
         if operation not in ('+', '-', '*', '/'):
-            stack.append(operation)
+            stack.push(operation)
         else:
             b = int(stack.pop())
             a = int(stack.pop())
-            if operation == '+':
-                stack.append(a + b)
-            if operation == '-':
-                stack.append(a - b)
-            if operation == '*':
-                stack.append(a * b)
-            if operation == '/':
-                if b == 0:
-                    raise ZeroDivisionError("Ошибка! Деление на ноль.\n")
-                stack.append(a // b)
-    print(stack[-1])
+            op_func = OPERATIONS.get(operation)
+            if op_func is None:
+                raise InputError("Ошибка! Неподдерживаемая операция.\n")
+            result = op_func(a, b)
+            stack.push(result)
+
+    print(stack.top())
 
 
 if __name__ == "__main__":
     try:
         expression = input()
         calculator(validate_expression(expression))
-    except InputError as e:
-        print(e)
-    except ZeroDivisionError as e:
+    except (InputError, ZeroDivisionError, IndexError) as e:
         print(e)
