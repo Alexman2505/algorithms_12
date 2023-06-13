@@ -11,18 +11,26 @@ def print_linked_list(vertex):
     print("None")
 
 
-n3 = Node('third')
+n5 = Node('fifth', None)
+n4 = Node('fourth', n5)
+n3 = Node('third', n4)
 n2 = Node('second', n3)
 n1 = Node('first', n2)
-print_linked_list(n1)
+# print_linked_list(n1)
 # first -> second -> third -> None
 
 
 # А теперь рассмотрим встраивание в середину списка
 def get_node_by_index(node, index):
     while index:
+        print('index ДО удаления', index)
+        print(node.value)
         node = node.next
         index -= 1
+        print('index ПОСЛЕ удаления', index)
+        print(node.value)
+        print()
+    print('!!!!', node.value)
     return node
 
 
@@ -37,7 +45,8 @@ def insert_node(head, index, value):
     return head
 
 
-node, index, value = n1, 2, 'new_node'
+node, index, value = n1, 4, 'new_node'
 head = insert_node(node, index, value)
 print_linked_list(head)
-# first -> second -> new_node -> third -> None
+# print(n1.value)
+# print(head.value)
