@@ -1,4 +1,5 @@
-# 88182880
+# 88196383
+
 from typing import Tuple
 
 
@@ -16,14 +17,20 @@ class Deque:
 
     def is_empty(self) -> None:
         if self._count == 0:
-            raise IndexError("error")
-
-    def _calculate_index(self, index: int, offset: int) -> int:
-        return (index + offset) % self.size
+            raise IndexError(
+                "Это ошибка, сигнализирующая о том, что вы пытаетесь "
+                "из пустого(!) списка достать элемент\n"
+            )
 
     def is_full(self) -> None:
         if self._count == self.size:
-            raise IndexError("error")
+            raise IndexError(
+                "Это ошибка, сигнализирующая о том, что вы пытаетесь "
+                "в уже заполненный(!) список добавить еще один элемент\n"
+            )
+
+    def _calculate_index(self, index: int, offset: int) -> int:
+        return (index + offset) % self.size
 
     def push_front(self, value: int) -> None:
         self.is_full()
@@ -37,19 +44,19 @@ class Deque:
         self._tail = self._calculate_index(self._tail, 1)
         self._count += 1
 
-    def pop_front(self) -> None:
+    def pop_front(self) -> int:
         self.is_empty()
         value = self._buffer[self._head]
         self._head = self._calculate_index(self._head, 1)
         self._count -= 1
-        print(value)
+        return value
 
-    def pop_back(self) -> None:
+    def pop_back(self) -> int:
         self.is_empty()
         self._tail = self._calculate_index(self._tail, -1)
         value = self._buffer[self._tail]
         self._count -= 1
-        print(value)
+        return value
 
 
 def read_input() -> Tuple[int, int]:
@@ -57,17 +64,19 @@ def read_input() -> Tuple[int, int]:
         n = int(input())
     except ValueError:
         raise InputError(
-            'Ошибка! Было введено не число. Введите число в диапазоне от 1 до 100000\n'
+            "Ошибка! Было введено не число. Введите число "
+            "в диапазоне от 1 до 100000\n"
         )
     if not 1 <= n <= 100000:
         raise InputError(
-            'Ошибка! Число должно быть в диапазоне от 1 до 100000\n'
+            "Ошибка! Число должно быть в диапазоне от 1 до 100000\n"
         )
     try:
         m = int(input())
     except ValueError:
         raise InputError(
-            'Ошибка! Было введено не число. Введите число в диапазоне от 1 до 50000\n'
+            "Ошибка! Было введено не число. Введите число "
+            "в диапазоне от 1 до 50000\n"
         )
     if not 1 <= m <= 50000:
         raise InputError(
@@ -82,7 +91,9 @@ def read_commands(n: int, m: int) -> None:
     for _ in range(n):
         command, *args = input().split()
         try:
-            getattr(deque, command)(*map(int, args))
+            result = getattr(deque, command)(*map(int, args))
+            if result is not None:
+                print(result)
         except AttributeError:
             print("Ошибка! Вы ввели недопустимый метод")
         except IndexError:
